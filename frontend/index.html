@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrescriBot Modular</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Ativa modo escuro via classe 'dark' no HTML
+        }
+    </script>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen p-6 transition-colors duration-300">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- HEADER -->
+        <header class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 dark:text-white">🏛️ PrescriBot <span class="text-blue-600 dark:text-blue-400">Modular</span></h1>
+                <p class="text-slate-500 dark:text-slate-400">Frontend Desacoplado</p>
+            </div>
+            <!-- Botão Dark Mode -->
+            <button id="themeToggle" class="p-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow text-slate-600 dark:text-slate-300 transition-all">
+                <!-- Ícone Lua (Dark) -->
+                <svg id="iconMoon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <!-- Ícone Sol (Light) -->
+                <svg id="iconSun" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- FORMULÁRIO -->
+            <div class="md:col-span-1 bg-white dark:bg-slate-900 p-6 rounded-xl shadow border border-slate-200 dark:border-slate-800 h-fit transition-colors">
+                <h2 class="font-semibold mb-4 text-slate-900 dark:text-white">📝 Dados do Título</h2>
+                <form id="calcForm" class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">API Key (Gemini)</label>
+                        <input type="password" id="apiKey" class="input-field" placeholder="Cole aqui...">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="banco" value="Itaú" class="input-field" placeholder="Banco">
+                        <input type="number" id="valor" value="15000" class="input-field" placeholder="Valor">
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-slate-500 dark:text-slate-400">Emissão</label>
+                        <input type="date" id="emissao" class="input-field w-full">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-500 dark:text-slate-400">Data Análise</label>
+                        <input type="date" id="analise" class="input-field w-full">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="cid_e" value="São Paulo" class="input-field" placeholder="Cidade Emissão">
+                        <input type="text" id="cid_p" value="Campinas" class="input-field" placeholder="Cidade Pagto">
+                    </div>
+
+                    <button type="submit" id="btnCalcular" class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-bold py-2 rounded transition shadow-lg shadow-blue-600/20">
+                        Analisar
+                    </button>
+                </form>
+            </div>
+
+            <!-- RESULTADOS -->
+            <div class="md:col-span-2 space-y-4">
+                
+                <!-- Card Matemático -->
+                <div id="resultCard" class="hidden bg-white dark:bg-slate-900 p-6 rounded-xl shadow border border-slate-200 dark:border-slate-800 transition-colors">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100">Relatório Técnico</h3>
+                        <span id="statusBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800">--</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center mb-4 text-sm">
+                        <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">
+                            <div class="text-xs text-slate-500 dark:text-slate-400 uppercase">Apresentação</div>
+                            <strong id="dtApres" class="text-slate-700 dark:text-slate-200 font-mono text-base">--</strong>
+                        </div>
+                        <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded border border-yellow-100 dark:border-yellow-900/30">
+                            <div class="text-xs text-yellow-600 dark:text-yellow-400 uppercase">Execução</div>
+                            <strong id="dtExec" class="text-yellow-800 dark:text-yellow-200 font-mono text-base">--</strong>
+                        </div>
+                        <div class="p-3 bg-orange-50 dark:bg-orange-900/20 rounded border border-orange-100 dark:border-orange-900/30">
+                            <div class="text-xs text-orange-600 dark:text-orange-400 uppercase">Monitória</div>
+                            <strong id="dtMonit" class="text-orange-800 dark:text-orange-200 font-mono text-base">--</strong>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded border border-blue-100 dark:border-blue-900/30 text-sm text-blue-800 dark:text-blue-200 flex items-start gap-2">
+                        <span>💡</span>
+                        <span id="msgCurta"></span>
+                    </div>
+                </div>
+
+                <!-- Card IA -->
+                <div id="iaCard" class="hidden bg-white dark:bg-slate-900 p-6 rounded-xl shadow border border-purple-100 dark:border-purple-900/30 relative overflow-hidden transition-colors">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-slate-800 dark:text-white">
+                        🤖 Parecer IA 
+                        <span id="iaLoading" class="hidden text-xs font-normal text-purple-500 animate-pulse">Gerando...</span>
+                    </h3>
+                    <div id="iaContent" class="prose prose-sm dark:prose-invert max-w-none text-slate-600 dark:text-slate-300"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Classes personalizadas para inputs que suportam dark mode */
+        .input-field { 
+            padding: 0.5rem; 
+            border-width: 1px; 
+            border-radius: 0.5rem; 
+            font-size: 0.875rem; 
+            width: 100%;
+            transition: all 0.2s;
+        }
+        /* Claro */
+        .input-field {
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+            color: #0f172a;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        /* Escuro (quando .dark está no html) */
+        .dark .input-field {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #ffffff;
+            color-scheme: dark; /* Corrige ícone de calendário */
+        }
+        .dark .input-field:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+        }
+        
+        /* Placeholder color fix */
+        .dark .input-field::placeholder { color: #94a3b8; }
+    </style>
+
+    <script src="app.js"></script>
+</body>
+</html>
