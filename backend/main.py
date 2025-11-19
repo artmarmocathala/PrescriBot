@@ -5,9 +5,11 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-# Removemos os pontos para evitar problemas de import relativo
 from models import ChequeInput, IAInput
 from services import CalculadoraService, IAService
+import time
+import threading
+import os
 
 # Função para achar os arquivos quando rodar como .exe (PyInstaller)
 def resource_path(relative_path):
@@ -18,6 +20,26 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 app = FastAPI(title="PrescriBot App")
+
+# --- Mecanismo de Auto-Shutdown (Heartbeat) ---
+# Variável global para rastrear o último sinal de vida do frontend
+last_heartbeat = time.time()
+SHUTDOWN_TIMEOUT = 5  # Segundos sem heartbeat para desligar
+
+def shutdown_monitor(): # monitora o front
+    global last_heartbeat
+    # tempo pro navegador abrir
+    time.sleep(15)
+    
+    while True:
+        # Se passou do tempo limite sem sinal
+        if time.time() - last_heartbeat > SHUTDOWN_TIMEOUT:
+            print("Frontend desconectado. Encerrando servidor...")
+            os._exit(0) # Encerra o processo imediatamente
+        time.sleep(2)
+
+# Inicia o monitor em uma thread separada (daemon morre junto com o principal)
+threading.Thread(target=shutdown_monitor, daemon=True).start()
 
 app.add_middleware(
     CORSMiddleware,
@@ -44,8 +66,13 @@ def endpoint_ia(dados: IAInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/api/heartbeat")
+def heartbeat(): # sinal de vida do front
+    global last_heartbeat
+    last_heartbeat = time.time()
+    return {"status": "alive"}
+
 # --- Servir o Frontend (HTML/JS) ---
-# Isso faz o Python entregar o site, não precisa abrir o index.html na mão
 path_frontend = resource_path("frontend")
 
 if os.path.exists(path_frontend):

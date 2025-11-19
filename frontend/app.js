@@ -38,7 +38,7 @@ function updateIcons(isDark) {
 }
 
 
-// 3. Lógica de Negócio (Cálculo + IA)
+// 3. Logica de Negócio (Calculo + IA)
 const form = document.getElementById('calcForm');
 const btn = document.getElementById('btnCalcular');
 
@@ -82,8 +82,8 @@ form.addEventListener('submit', async (e) => {
     } catch (error) {
         alert('Erro: ' + error.message);
     } finally {
-        btn.disabled = false;
         btn.innerText = originalText;
+        btn.disabled = false;
     }
 });
 
@@ -142,3 +142,12 @@ async function consultarIA(apiKey, dadosCalc, valorOriginal) {
         loading.classList.add('hidden');
     }
 }
+
+// 4. Heartbeat (sinal de vida para o backend)
+// Se o navegador fechar, o backend para de receber isso e se desliga em 5s.
+setInterval(() => {
+    fetch('/api/heartbeat')
+        .catch(err => {
+            //  se falhar e pq o back ja morreu ou esta fechando
+        });
+}, 2000);
