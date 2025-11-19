@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.log
+
+# Frontend / Node
+node_modules/
+npm-debug.log
+yarn-error.log
+.cache/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
