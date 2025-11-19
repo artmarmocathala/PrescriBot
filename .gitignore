@@ -21,3 +21,11 @@ build/
 .vscode/
 .idea/
 *.swp
+
+# PyInstaller
+*.manifest
+*.spec
+backend/dist/
+backend/build/
+
+

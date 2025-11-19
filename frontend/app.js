@@ -63,7 +63,7 @@ form.addEventListener('submit', async (e) => {
         };
 
         // Request Backend
-        const response = await fetch('http://localhost:8000/api/calcular', {
+        const response = await fetch('/api/calcular', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -123,7 +123,7 @@ async function consultarIA(apiKey, dadosCalc, valorOriginal) {
     content.innerHTML = '';
 
     try {
-        const response = await fetch('http://localhost:8000/api/consultar-ia', {
+        const response = await fetch('/api/consultar-ia', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
