@@ -38,8 +38,10 @@ def shutdown_monitor(): # monitora o front
             os._exit(0) # Encerra o processo imediatamente
         time.sleep(2)
 
-# Inicia o monitor em uma thread separada (daemon morre junto com o principal)
-threading.Thread(target=shutdown_monitor, daemon=True).start()
+# Inicia o monitor em uma thread separada se estiver rodando como executável (PyInstaller)
+# Isso evita que o servidor feche sozinho durante o desenvolvimento
+if getattr(sys, 'frozen', False):
+    threading.Thread(target=shutdown_monitor, daemon=True).start()
 
 app.add_middleware(
     CORSMiddleware,
