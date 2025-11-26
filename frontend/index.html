@@ -27,9 +27,7 @@
             </div>
             <!-- Botão Dark Mode -->
             <button id="themeToggle" class="p-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow text-slate-600 dark:text-slate-300 transition-all">
-                <!-- Ícone Lua (Dark) -->
                 <svg id="iconMoon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                <!-- Ícone Sol (Light) -->
                 <svg id="iconSun" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </button>
         </header>
@@ -45,23 +43,89 @@
                     </div>
                     
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="banco" value="Itaú" class="input-field" placeholder="Banco">
-                        <input type="number" id="valor" value="15000" class="input-field" placeholder="Valor">
+                        <div>
+                            <label class="text-xs text-slate-500 dark:text-slate-400">Banco</label>
+                            <input type="text" id="banco" value="Itaú" class="input-field" placeholder="Digite o banco..." list="listaBancos" autocomplete="off">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 dark:text-slate-400">Valor</label>
+                            <input type="number" id="valor" value="15000" class="input-field" placeholder="Valor">
+                        </div>
                     </div>
 
                     <div>
-                        <label class="text-xs text-slate-500 dark:text-slate-400">Emissão</label>
-                        <input type="date" id="emissao" class="input-field w-full">
+                        <label class="text-xs text-slate-500 dark:text-slate-400">Emissão (dd/mm/aaaa)</label>
+                        <div class="date-wrapper">
+                            <input type="text" id="emissao" class="input-field w-full pr-10" placeholder="dd/mm/aaaa" maxlength="10">
+                            <input type="date" id="emissao_picker" class="date-picker-overlay">
+                            <svg class="date-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
                     </div>
                     <div>
-                        <label class="text-xs text-slate-500 dark:text-slate-400">Data Análise</label>
-                        <input type="date" id="analise" class="input-field w-full">
+                        <label class="text-xs text-slate-500 dark:text-slate-400">Data Análise (dd/mm/aaaa)</label>
+                        <div class="date-wrapper">
+                            <input type="text" id="analise" class="input-field w-full pr-10" placeholder="dd/mm/aaaa" maxlength="10">
+                            <input type="date" id="analise_picker" class="date-picker-overlay">
+                            <svg class="date-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="cid_e" value="São Paulo" class="input-field" placeholder="Cidade Emissão">
-                        <input type="text" id="cid_p" value="Campinas" class="input-field" placeholder="Cidade Pagto">
+                        <div>
+                            <label class="text-xs text-slate-500 dark:text-slate-400">Cidade Emissão</label>
+                            <input type="text" id="cid_e" value="São Paulo" class="input-field" placeholder="Digite a cidade..." list="listaCidades" autocomplete="off">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 dark:text-slate-400">Cidade Pagamento</label>
+                            <input type="text" id="cid_p" value="Campinas" class="input-field" placeholder="Digite a cidade..." list="listaCidades" autocomplete="off">
+                        </div>
                     </div>
+
+                    <!-- Datalists para autocomplete -->
+                    <datalist id="listaBancos">
+                        <option value="Banco do Brasil">
+                        <option value="Bradesco">
+                        <option value="Caixa Econômica Federal">
+                        <option value="Itaú">
+                        <option value="Santander">
+                        <option value="BTG Pactual">
+                        <option value="Safra">
+                        <option value="Sicredi">
+                        <option value="Sicoob">
+                        <option value="Banrisul">
+                    </datalist>
+                    <datalist id="listaCidades">
+                        <option value="São Paulo">
+                        <option value="Rio de Janeiro">
+                        <option value="Belo Horizonte">
+                        <option value="Brasília">
+                        <option value="Salvador">
+                        <option value="Fortaleza">
+                        <option value="Curitiba">
+                        <option value="Recife">
+                        <option value="Porto Alegre">
+                        <option value="Manaus">
+                        <option value="Belém">
+                        <option value="Goiânia">
+                        <option value="Guarulhos">
+                        <option value="Campinas">
+                        <option value="São Luís">
+                        <option value="São Gonçalo">
+                        <option value="Maceió">
+                        <option value="Duque de Caxias">
+                        <option value="Natal">
+                        <option value="Campo Grande">
+                        <option value="Teresina">
+                        <option value="São Bernardo do Campo">
+                        <option value="João Pessoa">
+                        <option value="Santo André">
+                        <option value="Osasco">
+                        <option value="Ribeirão Preto">
+                        <option value="Uberlândia">
+                        <option value="Sorocaba">
+                        <option value="Contagem">
+                        <option value="Aracaju">
+                    </datalist>
 
                     <button type="submit" id="btnCalcular" class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-bold py-2 rounded transition shadow-lg shadow-blue-600/20">
                         Analisar
@@ -149,6 +213,47 @@
         
         /* Placeholder color fix */
         .dark .input-field::placeholder { color: #94a3b8; }
+
+        /* Date picker com calendário */
+        .date-wrapper {
+            position: relative;
+        }
+        .date-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: #64748b;
+            pointer-events: none;
+        }
+        .dark .date-icon {
+            color: #94a3b8;
+        }
+        .date-picker-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .date-picker-overlay {
+            color-scheme: light;
+        }
+        .dark .date-picker-overlay {
+            color-scheme: dark;
+        }
+        .date-picker-overlay::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
     </style>
 
     <script src="app.js"></script>

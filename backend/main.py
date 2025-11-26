@@ -11,20 +11,20 @@ import time
 import threading
 import os
 
-# Função para achar os arquivos quando rodar como .exe (PyInstaller)
+# Funcao para achar os arquivos quando rodar como .exe (PyInstaller)
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
     except Exception:
-        base_path = os.path.abspath("..") # Assume que backend e frontend são irmãos no modo dev
+        base_path = os.path.abspath("..") # Assume que backend e frontend são irmaos no modo dev
     return os.path.join(base_path, relative_path)
 
 app = FastAPI(title="PrescriBot App")
 
 # --- Mecanismo de Auto-Shutdown (Heartbeat) ---
-# Variável global para rastrear o último sinal de vida do frontend
+# Variavel global para rastrear o ultimo sinal de vida do frontend
 last_heartbeat = time.time()
-SHUTDOWN_TIMEOUT = 30  # Segundos sem heartbeat para desligar (tempo extra para imprimir PDF)
+SHUTDOWN_TIMEOUT = 30  # Segundos sem heartbeat para desligar
 
 def shutdown_monitor(): # monitora o front
     global last_heartbeat
@@ -39,7 +39,7 @@ def shutdown_monitor(): # monitora o front
         time.sleep(2)
 
 # Inicia o monitor em uma thread separada se estiver rodando como executável (PyInstaller)
-# Isso evita que o servidor feche sozinho durante o desenvolvimento
+# Isso evita que o servidor feche sozinho durante o desenvolvimento (n testado :v)
 if getattr(sys, 'frozen', False):
     threading.Thread(target=shutdown_monitor, daemon=True).start()
 

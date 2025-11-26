@@ -1,6 +1,68 @@
-// 1. Configuração Inicial de Datas
-document.getElementById('emissao').valueAsDate = new Date('2023-06-15');
-document.getElementById('analise').valueAsDate = new Date();
+// 1. Configuração Inicial de Datas (formato dd/mm/aaaa)
+function formatarDataBR(date) {
+    const d = date.getDate().toString().padStart(2, '0');
+    const m = (date.getMonth() + 1).toString().padStart(2, '0');
+    const y = date.getFullYear();
+    return `${d}/${m}/${y}`;
+}
+
+function converterDataParaISO(dataBR) {
+    // Converte dd/mm/aaaa para aaaa-mm-dd (formato que o backend espera)
+    const partes = dataBR.split('/');
+    if (partes.length === 3) {
+        return `${partes[2]}-${partes[1]}-${partes[0]}`;
+    }
+    return dataBR;
+}
+
+// Máscara automática para campos de data
+function aplicarMascaraData(input) {
+    input.addEventListener('input', (e) => {
+        let valor = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+        if (valor.length > 8) valor = valor.slice(0, 8);
+        
+        if (valor.length >= 5) {
+            valor = valor.slice(0, 2) + '/' + valor.slice(2, 4) + '/' + valor.slice(4);
+        } else if (valor.length >= 3) {
+            valor = valor.slice(0, 2) + '/' + valor.slice(2);
+        }
+        e.target.value = valor;
+    });
+}
+
+// Aplica máscara nos campos de data
+aplicarMascaraData(document.getElementById('emissao'));
+aplicarMascaraData(document.getElementById('analise'));
+
+// Sincroniza o date picker com o campo de texto
+function configurarDatePicker(campoId) {
+    const picker = document.getElementById(campoId + '_picker');
+    const campoTexto = document.getElementById(campoId);
+    
+    // Quando clicar no ícone do calendário (date picker)
+    picker.addEventListener('click', () => {
+        // Sincroniza o valor atual do campo texto para o picker
+        const valorAtual = campoTexto.value;
+        if (valorAtual && valorAtual.length === 10) {
+            picker.value = converterDataParaISO(valorAtual);
+        }
+    });
+    
+    // Quando o usuário selecionar uma data no calendário
+    picker.addEventListener('change', () => {
+        if (picker.value) {
+            const [ano, mes, dia] = picker.value.split('-');
+            campoTexto.value = `${dia}/${mes}/${ano}`;
+        }
+    });
+}
+
+configurarDatePicker('emissao');
+configurarDatePicker('analise');
+
+// Define valores iniciais
+document.getElementById('emissao').value = '15/06/2023';
+document.getElementById('analise').value = formatarDataBR(new Date());
 
 // 2. Lógica de Dark Mode
 const themeToggleBtn = document.getElementById('themeToggle');
@@ -56,8 +118,8 @@ form.addEventListener('submit', async (e) => {
         const payload = {
             banco: document.getElementById('banco').value,
             valor: parseFloat(document.getElementById('valor').value),
-            data_emissao: document.getElementById('emissao').value,
-            data_analise: document.getElementById('analise').value,
+            data_emissao: converterDataParaISO(document.getElementById('emissao').value),
+            data_analise: converterDataParaISO(document.getElementById('analise').value),
             cidade_emissao: document.getElementById('cid_e').value,
             cidade_pagamento: document.getElementById('cid_p').value
         };
