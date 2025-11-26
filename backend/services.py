@@ -69,7 +69,7 @@ class IAService:
         - Resumo Técnico: {dados_calc['msg_curta']}
         - Data Limite Execução: {dados_calc['dt_execucao']}
 
-        1. Explique o risco jurídico atual em 1 parágrafo.
+        1. Explique o risco jurídico atual em no máximo 3 parágrafos, não mencione o número de parágrafos usado na resposta.
         2. Crie um modelo de mensagem de cobrança para E-mail adequado para esta fase.
         """
         

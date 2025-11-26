@@ -24,7 +24,7 @@ app = FastAPI(title="PrescriBot App")
 # --- Mecanismo de Auto-Shutdown (Heartbeat) ---
 # Variável global para rastrear o último sinal de vida do frontend
 last_heartbeat = time.time()
-SHUTDOWN_TIMEOUT = 5  # Segundos sem heartbeat para desligar
+SHUTDOWN_TIMEOUT = 30  # Segundos sem heartbeat para desligar (tempo extra para imprimir PDF)
 
 def shutdown_monitor(): # monitora o front
     global last_heartbeat
