@@ -101,6 +101,10 @@ Você deve gerar o executável utilizando o comando do PyInstaller.
 3.  Execute o comando abaixo para gerar o executável. Este comando empacota a aplicação em um único arquivo (`--onefile`), inclui a pasta frontend (`--add-data`) e define o nome do executável:
 
     ```bash
+    # windows
+    pyinstaller --name="PrescriBot" --onefile --add-data "../frontend;frontend" main.py
+
+    # linux
     pyinstaller --name="PrescriBot" --onefile --add-data "../frontend;frontend" main.py
     ```
 
