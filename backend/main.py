@@ -24,7 +24,7 @@ app = FastAPI(title="PrescriBot App")
 # --- Mecanismo de Auto-Shutdown (Heartbeat) ---
 # Variavel global para rastrear o ultimo sinal de vida do frontend
 last_heartbeat = time.time()
-SHUTDOWN_TIMEOUT = 30  # Segundos sem heartbeat para desligar
+SHUTDOWN_TIMEOUT = 600  # Segundos sem heartbeat para desligar
 
 def shutdown_monitor(): # monitora o front
     global last_heartbeat
@@ -92,4 +92,7 @@ if __name__ == "__main__":
     Timer(1.5, open_browser).start()
     
     # Roda o servidor
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    if sys.stdout is None: # se buildar com --windowed n vai ter console, ent precisa desabilitar logs
+        uvicorn.run(app, host="127.0.0.1", port=8000, log_config=None)
+    else: # normal
+        uvicorn.run(app, host="127.0.0.1", port=8000)
