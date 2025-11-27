@@ -105,7 +105,7 @@ Você deve gerar o executável utilizando o comando do PyInstaller.
     pyinstaller --name="PrescriBot" --onefile --add-data "../frontend;frontend" main.py
 
     # linux
-    pyinstaller --name="PrescriBot" --onefile --add-data "../frontend;frontend" main.py
+    pyinstaller --name="PrescriBot" --onefile --add-data "../frontend:frontend" main.py
     ```
 
     *   `--name="PrescriBot"`: Define o nome do executável.
