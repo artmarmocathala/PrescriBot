@@ -79,3 +79,42 @@ Como o frontend é estático (HTML/JS), você tem duas opções:
 
 *   O backend está configurado com CORS (`allow_origins=["*"]`) para permitir requisições locais do frontend.
 *   Certifique-se de que a API Key do Google Generative AI esteja configurada corretamente no código ou em variáveis de ambiente para que as funcionalidades de IA funcionem.
+
+## Versão Executável (Windows)
+
+Esta aplicação pode ser empacotada como um executável (`.exe`) para facilitar a distribuição no Windows, dispensando a instalação do Python pelo usuário final.
+
+### Gerando o Executável
+
+Você deve gerar o executável utilizando o comando do PyInstaller.
+
+1.  Certifique-se de ter o `pyinstaller` instalado:
+    ```bash
+    pip install pyinstaller
+    ```
+
+2.  Navegue até a pasta `backend`:
+    ```bash
+    cd backend
+    ```
+
+3.  Execute o comando abaixo para gerar o executável. Este comando empacota a aplicação em um único arquivo (`--onefile`), inclui a pasta frontend (`--add-data`) e define o nome do executável:
+
+    ```bash
+    pyinstaller --name="PrescriBot" --onefile --add-data "../frontend;frontend" main.py
+    ```
+
+    *   `--name="PrescriBot"`: Define o nome do executável.
+    *   `--onefile`: Gera um único arquivo `.exe`.
+    *   `--add-data "../frontend;frontend"`: Inclui a pasta `frontend` dentro do executável.
+
+    > **Dica:** Adicione a flag `--windowed` ao comando se quiser ocultar a janela preta do terminal ao executar o programa.
+
+4.  O executável será gerado na pasta `backend/dist/`.
+
+### Executando
+
+*   Vá até a pasta `backend/dist/`.
+*   Execute o arquivo `PrescriBot.exe`.
+*   A aplicação iniciará o servidor e abrirá automaticamente o navegador padrão com a interface do usuário.
+
