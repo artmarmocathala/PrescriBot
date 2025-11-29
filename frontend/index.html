@@ -254,6 +254,119 @@
             height: 100%;
             cursor: pointer;
         }
+
+        /* ===== Estilos para o Parecer da IA ===== */
+        #iaContent {
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* Títulos/Seções (h2, h3) */
+        #iaContent h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1e293b;
+        }
+        .dark #iaContent h2 {
+            border-bottom-color: #334155;
+            color: #f1f5f9;
+        }
+        #iaContent h2:first-child {
+            margin-top: 0;
+        }
+
+        #iaContent h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #334155;
+        }
+        .dark #iaContent h3 {
+            color: #e2e8f0;
+        }
+
+        /* Parágrafos */
+        #iaContent p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        /* Listas */
+        #iaContent ul, #iaContent ol {
+            margin: 0.75rem 0 1rem 1.5rem;
+            padding: 0;
+        }
+        #iaContent li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem;
+        }
+        #iaContent ul li {
+            list-style-type: disc;
+        }
+        #iaContent ol li {
+            list-style-type: decimal;
+        }
+
+        /* Negrito/Strong - destaque */
+        #iaContent strong {
+            font-weight: 600;
+            color: #1e40af;
+        }
+        .dark #iaContent strong {
+            color: #93c5fd;
+        }
+
+        /* Blocos de código/email modelo */
+        #iaContent pre, #iaContent code {
+            background-color: #f1f5f9;
+            border-radius: 0.375rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+        }
+        .dark #iaContent pre, .dark #iaContent code {
+            background-color: #1e293b;
+        }
+        #iaContent pre {
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+        }
+        .dark #iaContent pre {
+            border-color: #334155;
+        }
+        #iaContent code {
+            padding: 0.125rem 0.375rem;
+        }
+
+        /* Blockquotes - para modelos de email ou citações */
+        #iaContent blockquote {
+            margin: 1rem 0;
+            padding: 1rem 1.25rem;
+            background-color: #faf5ff;
+            border-left: 4px solid #a855f7;
+            border-radius: 0 0.5rem 0.5rem 0;
+            color: #581c87;
+        }
+        .dark #iaContent blockquote {
+            background-color: rgba(168, 85, 247, 0.1);
+            color: #e9d5ff;
+        }
+
+        /* Linha horizontal */
+        #iaContent hr {
+            margin: 1.5rem 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dark #iaContent hr {
+            border-top-color: #334155;
+        }
     </style>
 
     <script src="app.js"></script>
