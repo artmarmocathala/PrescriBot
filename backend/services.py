@@ -62,15 +62,27 @@ class IAService:
         model = genai.GenerativeModel('gemini-2.5-flash')
 
         prompt = f"""
-        Atue como o Consultor Jurídico 'PrescriBot'. Baseado APENAS neste contexto: {IAService.BASE_LEGAL}
-        Analise este caso:
-        - Valor: {dados_cheque['valor']}
-        - Status: {dados_calc['status']}
-        - Resumo Técnico: {dados_calc['msg_curta']}
-        - Data Limite Execução: {dados_calc['dt_execucao']}
+        Atue como o Consultor de Cheques 'PrescriBot'. Baseado APENAS neste contexto: {IAService.BASE_LEGAL}
+        
+        ## DADOS DO CHEQUE:
+        - **Banco:** {dados_cheque.get('banco', 'Não informado')}
+        - **Valor:** {dados_cheque.get('valor', 'Não informado')}
+        - **Cidade de Emissão:** {dados_cheque.get('cidade_emissao', 'Não informada')}
+        - **Cidade de Pagamento:** {dados_cheque.get('cidade_pagamento', 'Não informada')}
+        
+        ## ANÁLISE MATEMÁTICA (já calculada):
+        - **Status Atual:** {dados_calc.get('status', 'N/A')}
+        - **Tipo de Praça:** {dados_calc.get('tipo_praca', 'N/A')}
+        - **Prazo de Apresentação até:** {dados_calc.get('dt_apresentacao', 'N/A')}
+        - **Prazo de Execução até:** {dados_calc.get('dt_execucao', 'N/A')}
+        - **Prazo de Monitória até:** {dados_calc.get('dt_monitoria', 'N/A')}
+        - **Resumo Técnico:** {dados_calc.get('msg_curta', 'N/A')}
+        
+        ## INSTRUÇÕES:
+        Foque na clareza visual da mensagem, use listas e negrito para destacar pontos cruciais da análise, espace os parágrafos e separe claramente as seções.
 
-        1. Explique o risco jurídico atual em no máximo 3 parágrafos, não mencione o número de parágrafos usado na resposta.
-        2. Crie um modelo de mensagem de cobrança para E-mail adequado para esta fase.
+        1. Explique o risco jurídico atual em no máximo 2 parágrafos, não mencione o número de parágrafos usado na resposta. Nomeie a seção como "Análise Jurídica".
+        2. Crie um modelo de mensagem de cobrança para E-mail adequado para esta fase. Nomeie a seção como "Modelo de E-mail de Cobrança".
         """
         
         response = model.generate_content(prompt)
