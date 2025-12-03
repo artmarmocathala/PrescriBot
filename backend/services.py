@@ -81,7 +81,7 @@ class IAService:
         ## INSTRUÇÕES:
         Foque na clareza visual da mensagem, use listas e negrito para destacar pontos cruciais da análise, espace os parágrafos e separe claramente as seções.
 
-        1. Explique o risco jurídico atual em no máximo 2 parágrafos, não mencione o número de parágrafos usado na resposta. Nomeie a seção como "Análise Jurídica".
+        1. Explique o risco jurídico atual em no máximo 2 parágrafos, não mencione o número de parágrafos usado na resposta. Nomeie a seção como "Análise Jurídica". Cite as leis usadas na análise.
         2. Crie um modelo de mensagem de cobrança para E-mail adequado para esta fase. Nomeie a seção como "Modelo de E-mail de Cobrança".
         """
         
